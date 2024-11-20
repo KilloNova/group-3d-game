@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,10 +18,14 @@ public class FirearmController : MonoBehaviour
     [SerializeField]
     private float bulletLifeTime;
 
-    private int fireDelayCounter;
+    private int fireCycleDelayCounter;
 
     [SerializeField]
-    private int fireDelayCounterMax;
+    private int fireCycleDelayCounterMax;
+
+    private int fireReloadDelayCounter;
+    [SerializeField]
+    private int fireReloadDelayCounterMax;
 
     [SerializeField]
     private float damage;
@@ -28,10 +33,20 @@ public class FirearmController : MonoBehaviour
     [SerializeField]
     private LayerMask collisionMask;
 
+    [SerializeField]
+    private int magazineCount;
+
+    [SerializeField]
+    private int maxMagazineCount;
+
+    [SerializeField]
+    private int totalBulletCount;
 
     public enum FireState {
         Ready,
-        Reloading
+        Reloading,
+        Cycling,
+        Empty
     }
 
     [SerializeField]
@@ -39,11 +54,43 @@ public class FirearmController : MonoBehaviour
 
     void Update()
     {
-        HandleFireState();
         if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
         {
             Fire();
         }
+        if(Input.GetKeyDown(KeyCode.R) && magazineCount != maxMagazineCount)
+        {
+            Reload();
+        }
+    }
+
+    
+
+    void FixedUpdate()
+    {
+        HandleFireState();
+    }
+    private void Reload()
+    {
+        if(fireState == FireState.Reloading || fireState == FireState.Cycling)
+        {
+            return;
+        }
+        Debug.Log("reloading");
+        //if the total bullets remaining exceeds what it needs to fill it up
+        if(totalBulletCount > maxMagazineCount - magazineCount)
+        {
+        totalBulletCount -= maxMagazineCount - magazineCount;
+        magazineCount = maxMagazineCount;
+        }
+        //theres not enough bullets to fill the mag to full
+        else
+        {
+            magazineCount = totalBulletCount;
+            totalBulletCount = 0;
+        }
+        fireReloadDelayCounter = 0;
+        fireState = FireState.Reloading;
     }
     private void Fire()
     {
@@ -51,24 +98,47 @@ public class FirearmController : MonoBehaviour
         spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask);
         ResetFireState();   
         GetComponent<AudioSource>().Play();
+        magazineCount--;
+        if(magazineCount == 0)
+        {
+            Reload();
+            fireState = FireState.Empty;
+        }
     }
     void HandleFireState()
     {
-        if(fireState == FireState.Reloading)
+        if(fireState == FireState.Cycling)
         {
-            if(fireDelayCounter >= fireDelayCounterMax)
+            if(fireCycleDelayCounter >= fireCycleDelayCounterMax)
             {
                 fireState = FireState.Ready;
             }
             else
             {
-            fireDelayCounter++;
+            fireCycleDelayCounter++;
             }
         }
+        else if(fireState == FireState.Reloading)
+        {
+            if(fireReloadDelayCounter >= fireReloadDelayCounterMax)
+            {
+                fireState = FireState.Ready;
+            }
+            else
+            {
+            fireReloadDelayCounter++;
+            }
+        }
+        else if(fireState == FireState.Empty && totalBulletCount != 0)
+        {
+            Reload();
+        }
+        
     }
     void ResetFireState()
     {
-            fireState = FireState.Reloading;
-            fireDelayCounter = 0;
+        fireState = FireState.Cycling;
+        fireCycleDelayCounter = 0;
+        
     }
 }

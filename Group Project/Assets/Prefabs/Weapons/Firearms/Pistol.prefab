@@ -163,13 +163,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3216155913639401703}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.078127205, y: -0.09599471, z: -0.19441473}
+  m_LocalRotation: {x: 0.11123167, y: -0, z: -0, w: 0.9937945}
+  m_LocalPosition: {x: 0.078127205, y: -0.084, z: -0.185}
   m_LocalScale: {x: 0.2, y: 0.37810987, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4733802300472092372}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.773, y: 0, z: 0}
 --- !u!33 &286413014579237670
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -291,13 +291,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2042282210877581739, guid: c93da85856f304da9bf815dc37f4ec40, type: 3}
   bulletSpawnPoint: {fileID: 7768616601738147051}
-  bulletSpeed: 0.35
+  bulletSpeed: 0.75
   bulletLifeTime: 5
-  fireDelayCounterMax: 150
+  fireCycleDelayCounterMax: 5
+  fireReloadDelayCounterMax: 45
   damage: 5
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
+  magazineCount: 8
+  maxMagazineCount: 8
+  totalBulletCount: 32
   fireState: 0
 --- !u!82 &8291429329048993918
 AudioSource:
