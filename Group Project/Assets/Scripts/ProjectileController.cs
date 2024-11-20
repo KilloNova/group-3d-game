@@ -42,16 +42,14 @@ public class ProjectileController : MonoBehaviour
         // Fire a raycast in the specified direction
         if (Physics.Raycast(transform.position, lfd.direction, out hit, lfd.speed, collisionMask))
         {
-            // Collision detected, handle collision logic here
+            transform.position = hit.transform.position;
             Debug.Log("Hit: " + hit.collider.name);
-            // You can add logic to deal damage or other effects here
             Destroy(gameObject);
         }
         else
         {
             // No collision, teleport the projectile forward
             transform.position += lfd.direction * lfd.speed;
-            Debug.Log("Teleported to: " + transform.position);
         }
     }
 }
