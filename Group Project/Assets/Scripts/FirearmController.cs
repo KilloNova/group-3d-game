@@ -6,6 +6,8 @@ using UnityEngine;
 public class FirearmController : MonoBehaviour
 {
 
+    public bool inHand;
+
     [SerializeField]
     private GameObject bulletPrefab;
 
@@ -54,6 +56,8 @@ public class FirearmController : MonoBehaviour
 
     void Update()
     {
+        if(!inHand)
+            return;
         if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
         {
             Fire();
@@ -68,6 +72,8 @@ public class FirearmController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(!inHand)
+            return;
         HandleFireState();
     }
     private void Reload()
@@ -76,7 +82,7 @@ public class FirearmController : MonoBehaviour
         {
             return;
         }
-        Debug.Log("reloading");
+        Debug.Log("reloading " + gameObject.name);
         //if the total bullets remaining exceeds what it needs to fill it up
         if(totalBulletCount > maxMagazineCount - magazineCount)
         {
@@ -97,8 +103,9 @@ public class FirearmController : MonoBehaviour
         GameObject spawnedBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask);
         ResetFireState();   
-        GetComponent<AudioSource>().Play();
-        magazineCount--;
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomly set pitch between 0.9 and 1.1
+        audioSource.Play();        magazineCount--;
         if(magazineCount == 0)
         {
             Reload();
