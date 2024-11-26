@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FirearmController : MonoBehaviour
@@ -35,14 +36,12 @@ public class FirearmController : MonoBehaviour
     [SerializeField]
     private LayerMask collisionMask;
 
-    [SerializeField]
-    private int magazineCount;
+    public int _magazineCount;
 
     [SerializeField]
     private int maxMagazineCount;
 
-    [SerializeField]
-    private int totalBulletCount;
+    public int _totalBulletCount;
 
     public enum FireState {
         Ready,
@@ -54,21 +53,113 @@ public class FirearmController : MonoBehaviour
     [SerializeField]
     private FireState fireState;
 
+    public enum FireModeType {
+        Bolt,
+        Semi,
+        Auto,
+        Spread,
+        Spread_Auto
+    }
+
+    [SerializeField]
+    private int spread_shotCount;
+
+    [SerializeField]
+    private FireModeType fireModeType;
+
+    public string _weaponName;
+
     void Update()
     {
         if(!inHand)
             return;
-        if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
+
+
+        switch (fireModeType)
         {
-            Fire();
+            case FireModeType.Auto:
+            if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
+            {
+                Fire();
+            }
+            break;
+            case FireModeType.Semi:
+            if(Input.GetKeyDown(KeyCode.Mouse0) && fireState == FireState.Ready)
+            {
+                Fire();
+            }
+            break;
+            case FireModeType.Spread:
+             if(Input.GetKeyDown(KeyCode.Mouse0) && fireState == FireState.Ready)
+            {
+                FireSpread();
+            }
+            break;
+
+
+
         }
-        if(Input.GetKeyDown(KeyCode.R) && magazineCount != maxMagazineCount)
+
+
+        if(fireModeType == FireModeType.Auto)
+        {
+            
+        }
+        
+        if(Input.GetKeyDown(KeyCode.R) && _magazineCount != maxMagazineCount)
         {
             Reload();
         }
     }
 
+    private void FireSpread()
+    {
+        if(!(fireModeType == FireModeType.Spread && fireModeType == FireModeType.Spread_Auto))
+        {
+            ProjectileController[] tempBulletList = new ProjectileController[spread_shotCount];
+            for (int i = 0; i < spread_shotCount; i++)
+            {
+                 Vector3 forward = bulletSpawnPoint.forward;
+                // Randomize the forward direction slightly
+                float spreadAngle = 5.0f; // Maximum spread angle
+                float minSpreadAngle = 2.0f; // Minimum spread angle
+
+                // Generate a random spread angle within the range of minSpreadAngle to spreadAngle
+                float randomX = UnityEngine.Random.Range(minSpreadAngle, spreadAngle) * (UnityEngine.Random.value > 0.5f ? 1 : -1);
+                float randomY = UnityEngine.Random.Range(minSpreadAngle, spreadAngle) * (UnityEngine.Random.value > 0.5f ? 1 : -1);
+
+                // Create a rotation based on the random spread
+                Quaternion spreadRotation = Quaternion.Euler(randomX, randomY, 0);
+
+                // Apply the spread rotation to the forward vector
+                Vector3 randomizedForward = spreadRotation * forward;
+                 GameObject spawnedBullet = Instantiate(bulletPrefab);
+                 spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, randomizedForward, bulletSpeed, bulletLifeTime, damage, collisionMask);
+                tempBulletList[i] = spawnedBullet.GetComponent<ProjectileController>();
+            }
+            for (int i = 0; i < spread_shotCount; i++)
+            {
+                tempBulletList[i].transform.SetPositionAndRotation(bulletSpawnPoint.position, bulletSpawnPoint.rotation);
+                tempBulletList[i].ready = true;
+            }
+            FireEnd();
+            
+            }
+    }
     
+    private void FireEnd()
+    {
+        ResetFireState();   
+        AudioSource audioSource = GetComponent<AudioSource>();
+        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomly set pitch between 0.9 and 1.1
+        audioSource.Play();        _magazineCount--;
+        if(_magazineCount == 0)
+        {
+            Reload();
+            fireState = FireState.Empty;
+        }
+    }
+
 
     void FixedUpdate()
     {
@@ -82,18 +173,18 @@ public class FirearmController : MonoBehaviour
         {
             return;
         }
-        Debug.Log("reloading " + gameObject.name);
+        Debug.Log("reloading " + _weaponName);
         //if the total bullets remaining exceeds what it needs to fill it up
-        if(totalBulletCount > maxMagazineCount - magazineCount)
+        if(_totalBulletCount > maxMagazineCount - _magazineCount)
         {
-        totalBulletCount -= maxMagazineCount - magazineCount;
-        magazineCount = maxMagazineCount;
+        _totalBulletCount -= maxMagazineCount - _magazineCount;
+        _magazineCount = maxMagazineCount;
         }
         //theres not enough bullets to fill the mag to full
         else
         {
-            magazineCount = totalBulletCount;
-            totalBulletCount = 0;
+            _magazineCount = _totalBulletCount;
+            _totalBulletCount = 0;
         }
         fireReloadDelayCounter = 0;
         fireState = FireState.Reloading;
@@ -102,15 +193,8 @@ public class FirearmController : MonoBehaviour
     {
         GameObject spawnedBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask);
-        ResetFireState();   
-        AudioSource audioSource = GetComponent<AudioSource>();
-        audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomly set pitch between 0.9 and 1.1
-        audioSource.Play();        magazineCount--;
-        if(magazineCount == 0)
-        {
-            Reload();
-            fireState = FireState.Empty;
-        }
+        spawnedBullet.GetComponent<ProjectileController>().ready = true;
+        FireEnd();
     }
     void HandleFireState()
     {
@@ -136,7 +220,7 @@ public class FirearmController : MonoBehaviour
             fireReloadDelayCounter++;
             }
         }
-        else if(fireState == FireState.Empty && totalBulletCount != 0)
+        else if(fireState == FireState.Empty && _totalBulletCount != 0)
         {
             Reload();
         }

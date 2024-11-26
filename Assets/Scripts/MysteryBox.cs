@@ -22,14 +22,19 @@ public class MysteryBox : PurchasePoint
 
     public void HandlePlayerWeaponsUpdated()
     {
+        LoadPrefabsFromFolder(folderName);
         List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
-        for(int i = 0; i < weapons.Count; i++)
+        
+        // Iterate backwards through the weapons list
+        for (int i = weapons.Count - 1; i >= 0; i--)
         {
-            string itemNamePlayer = playerWeapons[i].name.Replace("(Clone)", "").Trim();
-            string itemNameBox = weapons[i].name.Replace("(Clone)", "").Trim();
-            if(itemNameBox.Equals(itemNamePlayer))
+            for (int j = 0; j < playerWeapons.Count; j++)
             {
-                weapons.RemoveAt(i);
+                if (weapons[i].GetComponent<FirearmController>()._weaponName.Equals(playerWeapons[j].GetComponent<FirearmController>()._weaponName))
+                {
+                    weapons.RemoveAt(i);
+                    break; // Exit the inner loop since the weapon has been removed
+                }
             }
         }
     }
@@ -49,7 +54,7 @@ public class MysteryBox : PurchasePoint
     // Start is called before the first frame update
     void Start()
     {
-        LoadPrefabsFromFolder(folderName);
+        HandlePlayerWeaponsUpdated();
         purchasePointType = PurchasePointType.MysteryBox;
     }
 

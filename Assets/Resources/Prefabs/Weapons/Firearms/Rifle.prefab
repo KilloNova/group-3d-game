@@ -110,7 +110,7 @@ Transform:
   m_GameObject: {fileID: 5331123997232977569}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.111, y: -0.337, z: 0.583}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -135,7 +135,7 @@ MonoBehaviour:
   inHand: 0
   bulletPrefab: {fileID: 2042282210877581739, guid: c93da85856f304da9bf815dc37f4ec40, type: 3}
   bulletSpawnPoint: {fileID: 4312389509612070445}
-  bulletSpeed: 0.75
+  bulletSpeed: 2
   bulletLifeTime: 5
   fireCycleDelayCounterMax: 5
   fireReloadDelayCounterMax: 175
@@ -143,10 +143,13 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  magazineCount: 30
+  _magazineCount: 30
   maxMagazineCount: 30
-  totalBulletCount: 150
+  _totalBulletCount: 150
   fireState: 0
+  spread_shotCount: 0
+  fireModeType: 2
+  _weaponName: Assault Rifle
 --- !u!82 &637930836414402438
 AudioSource:
   m_ObjectHideFlags: 0

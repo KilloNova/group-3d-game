@@ -21,13 +21,16 @@ public class PlayerWeaponController : MonoBehaviour
     private int selectedWeapon;
 
     [SerializeField]
+    private Transform weaponSpawnPoint;
+
+    [SerializeField]
     private PurchasePoint nearbyPurchasePoint;
 
     public int money;
     // Start is called before the first frame update
     void Start()
     {
-        
+        weapons.Capacity = 4;
     } 
 
     // Update is called once per frame
@@ -43,14 +46,14 @@ public class PlayerWeaponController : MonoBehaviour
             BuyWeapon();
         }
     }
-    void weaponChange(int index)
+    void weaponChange(int index, bool newWeapon = false)
     {
         if(index > weapons.Count - 1)
         {
             Debug.LogWarning("player tried to access a weapon slot where there was no weapon");
             return;
         }
-        if(selectedWeapon == index)
+        if(selectedWeapon == index && !newWeapon)
         {
             return;
         }
@@ -61,7 +64,17 @@ public class PlayerWeaponController : MonoBehaviour
         weapons[index].GetComponent<FirearmController>().inHand = true;
         
         selectedWeapon = index;
+    }
 
+    void WeaponReplace(GameObject newWeapon)
+    {
+        Debug.Log("weapons were full, going to replace");
+        GameObject temp = weapons[selectedWeapon];
+        weapons.RemoveAt(selectedWeapon);
+        Destroy(temp);
+        weapons.Insert(selectedWeapon, newWeapon);
+        
+        weaponChange(selectedWeapon, true);
     }
 
 
@@ -80,6 +93,7 @@ public class PlayerWeaponController : MonoBehaviour
             Debug.LogWarning("lacking money.");
             return;
         }
+
         if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.WallBuy)
         {
            if(((WallBuy)nearbyPurchasePoint).purchased)
@@ -87,18 +101,35 @@ public class PlayerWeaponController : MonoBehaviour
                return;
            }
         }
+
+
         money -= nearbyPurchasePoint.GetCost();
+        
         GameObject newWeapon = nearbyPurchasePoint.BuyWeapon();
+        
         if(newWeapon == null)
         return;
-        weapons.Add(Instantiate(newWeapon, transform));
+        GameObject spawnedWeapon = Instantiate(newWeapon, transform);
+        spawnedWeapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        spawnedWeapon.transform.SetPositionAndRotation(weaponSpawnPoint.position, weaponSpawnPoint.rotation);
+
+        if(weapons.Count + 1 == weapons.Capacity)
+        {
+            WeaponReplace(spawnedWeapon);
+        }
+        else
+        {
+        
+        weapons.Add(spawnedWeapon);
         weaponChange(weapons.Count - 1);
+        }
         NotifyWeaponChange();
         if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.MysteryBox)
         {
             MysteryBox box = (MysteryBox)nearbyPurchasePoint;
-        box.erase();
+        box.HandlePlayerWeaponsUpdated();
        }
+
         
     }
 

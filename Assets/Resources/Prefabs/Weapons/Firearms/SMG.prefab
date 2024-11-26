@@ -57,8 +57,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 835774263925983479}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.111, y: -0.337, z: 0.583}
+  m_LocalRotation: {x: 0.004636986, y: -0.14512953, z: 0.0006801724, w: 0.9894016}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -92,10 +92,13 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  magazineCount: 50
+  _magazineCount: 50
   maxMagazineCount: 50
-  totalBulletCount: 150
+  _totalBulletCount: 300
   fireState: 0
+  spread_shotCount: 0
+  fireModeType: 2
+  _weaponName: P90
 --- !u!82 &5535088274679070638
 AudioSource:
   m_ObjectHideFlags: 0

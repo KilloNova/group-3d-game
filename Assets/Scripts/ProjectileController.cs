@@ -15,6 +15,8 @@ public class ProjectileController : MonoBehaviour
         
     }
 
+    public bool ready = false;
+
     public LiveFireData lfd;
 
     public LayerMask collisionMask; // LayerMask to specify which layers to check for collision
@@ -30,6 +32,7 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(ready)
         FireProjectile();
     }
 
