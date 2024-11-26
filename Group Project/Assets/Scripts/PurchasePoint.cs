@@ -14,7 +14,7 @@ public abstract class PurchasePoint : MonoBehaviour
 
     public AudioSource buySound;
 
-    private GameObject player;
+    protected GameObject player;
 
     public enum PurchasePointType {
         WallBuy,

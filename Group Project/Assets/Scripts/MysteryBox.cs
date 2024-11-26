@@ -7,15 +7,24 @@ public class MysteryBox : PurchasePoint
 
     private void OnEnable()
     {
-        FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated += HandlePlayerWeaponsUpdated;
+    //    FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated += HandlePlayerWeaponsUpdated;
     }
 
     private void OnDisable()
     {
-        FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated -= HandlePlayerWeaponsUpdated;
+       // FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated -= HandlePlayerWeaponsUpdated;
     }
 
-    private void HandlePlayerWeaponsUpdated()
+    public void HandlePlayerWeaponsUpdated()
+    {
+        List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
+        foreach (GameObject weapon in playerWeapons)
+        {
+            weapons.Remove(weapon);
+        }
+    }
+
+    public void erase()
     {
         List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
         foreach (GameObject weapon in playerWeapons)
