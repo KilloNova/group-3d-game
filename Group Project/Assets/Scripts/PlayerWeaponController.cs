@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class PlayerWeaponController : MonoBehaviour
 {
+
+    public delegate void PlayerWeaponsUpdatedHandler();
+    public event PlayerWeaponsUpdatedHandler OnPlayerWeaponsUpdated;
+
+    private void NotifyWeaponChange()
+    {
+        OnPlayerWeaponsUpdated?.Invoke();
+    }
+
+    
     [SerializeField]
     public List<GameObject> weapons;
 
@@ -11,7 +21,7 @@ public class PlayerWeaponController : MonoBehaviour
     private int selectedWeapon;
 
     [SerializeField]
-    private WallBuy nearbyWallBuy;
+    private PurchasePoint nearbyPurchasePoint;
 
     public int money;
     // Start is called before the first frame update
@@ -30,7 +40,7 @@ public class PlayerWeaponController : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.E))
         {
-            BuyWallWeapon();
+            BuyWeapon();
         }
     }
     void weaponChange(int index)
@@ -49,32 +59,39 @@ public class PlayerWeaponController : MonoBehaviour
         weapons[index].SetActive(true);
         weapons[selectedWeapon].GetComponent<FirearmController>().inHand = false;
         weapons[index].GetComponent<FirearmController>().inHand = true;
-
+        
         selectedWeapon = index;
 
     }
 
-    public void setNearbyWallBuy(WallBuy wall)
+
+    public void setNearbyPurchasePoint(PurchasePoint point)
     {
-        nearbyWallBuy = wall;
+        nearbyPurchasePoint = point;
     }
 
-    private void BuyWallWeapon()
+    private void BuyWeapon()
     {
-        if(nearbyWallBuy == null)
-            return;
+        if(nearbyPurchasePoint == null)
+            return; 
 
-        if(nearbyWallBuy.getCost() > money )
+        if(nearbyPurchasePoint.GetCost() > money)
         {
             Debug.LogWarning("lacking money.");
             return;
         }
-
-        if(nearbyWallBuy.purchased)
-            return;
-
-        GameObject newWeapon = nearbyWallBuy.BuyWeapon();
+        if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.WallBuy)
+        {
+           if(((WallBuy)nearbyPurchasePoint).purchased)
+           {
+               return;
+           }
+        }
+        money -= nearbyPurchasePoint.GetCost();
+        GameObject newWeapon = nearbyPurchasePoint.BuyWeapon();
         weapons.Add(Instantiate(newWeapon, transform));
         weaponChange(weapons.Count - 1);
+       
     }
+
 }
