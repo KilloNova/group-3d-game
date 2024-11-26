@@ -15,12 +15,22 @@ public class MysteryBox : PurchasePoint
        // FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated -= HandlePlayerWeaponsUpdated;
     }
 
+    [SerializeField]
+    private bool purchaseLockout;
+
+    float purchaseLockoutDelay = 3f;
+
     public void HandlePlayerWeaponsUpdated()
     {
         List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
-        foreach (GameObject weapon in playerWeapons)
+        for(int i = 0; i < weapons.Count; i++)
         {
-            weapons.Remove(weapon);
+            string itemNamePlayer = playerWeapons[i].name.Replace("(Clone)", "").Trim();
+            string itemNameBox = weapons[i].name.Replace("(Clone)", "").Trim();
+            if(itemNameBox.Equals(itemNamePlayer))
+            {
+                weapons.RemoveAt(i);
+            }
         }
     }
 
@@ -36,8 +46,6 @@ public class MysteryBox : PurchasePoint
     string folderName = "Prefabs/Weapons/Firearms";
     public List<GameObject> weapons;
 
-
-    public int cost;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +60,7 @@ public class MysteryBox : PurchasePoint
 
 
 
+
     void LoadPrefabsFromFolder(string path)
     {
         Object[] prefabs = Resources.LoadAll(path);
@@ -61,16 +70,19 @@ public class MysteryBox : PurchasePoint
         }
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    IEnumerator delayPurchase(float time)
     {
-        
+        yield return new WaitForSeconds(time);
+        purchaseLockout = false;
     }
 
     public override GameObject BuyWeapon()
     {
+        if(purchaseLockout)
+        return null;
+        purchaseLockout = true;
+        StartCoroutine(delayPurchase(purchaseLockoutDelay));
+
         buySound.Play();
         GameObject weapon = GetRandomWeapon();
         weapons.Remove(weapon);

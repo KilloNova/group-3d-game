@@ -89,6 +89,8 @@ public class PlayerWeaponController : MonoBehaviour
         }
         money -= nearbyPurchasePoint.GetCost();
         GameObject newWeapon = nearbyPurchasePoint.BuyWeapon();
+        if(newWeapon == null)
+        return;
         weapons.Add(Instantiate(newWeapon, transform));
         weaponChange(weapons.Count - 1);
         NotifyWeaponChange();

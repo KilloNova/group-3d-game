@@ -14,6 +14,7 @@ public abstract class PurchasePoint : MonoBehaviour
 
     public AudioSource buySound;
 
+    [SerializeField]
     protected GameObject player;
 
     public enum PurchasePointType {
@@ -23,11 +24,6 @@ public abstract class PurchasePoint : MonoBehaviour
 
     public PurchasePointType purchasePointType;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -49,6 +45,7 @@ public abstract class PurchasePoint : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
+        Debug.Log("CLEAN");
         if(other.gameObject.Equals(player))
         {
             inBuyZone = true;

@@ -13,9 +13,6 @@ public class WallBuy : PurchasePoint
     public bool purchased;
     
 
-    [SerializeField]
-    private AudioSource buySound;
-
     void Start()
     {
         purchasePointType = PurchasePointType.WallBuy;
