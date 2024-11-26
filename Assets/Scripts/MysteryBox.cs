@@ -37,7 +37,14 @@ public class MysteryBox : PurchasePoint
                 }
             }
         }
+        weapons = RemoveDuplicates(weapons);
     }
+
+    List<GameObject> RemoveDuplicates(List<GameObject> originalList)
+{
+    HashSet<GameObject> uniqueItems = new HashSet<GameObject>(originalList);
+    return new List<GameObject>(uniqueItems);
+}
 
     public void erase()
     {
