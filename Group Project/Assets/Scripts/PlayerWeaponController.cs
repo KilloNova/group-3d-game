@@ -91,7 +91,13 @@ public class PlayerWeaponController : MonoBehaviour
         GameObject newWeapon = nearbyPurchasePoint.BuyWeapon();
         weapons.Add(Instantiate(newWeapon, transform));
         weaponChange(weapons.Count - 1);
-       
+        NotifyWeaponChange();
+        if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.MysteryBox)
+        {
+            MysteryBox box = (MysteryBox)nearbyPurchasePoint;
+        box.erase();
+       }
+        
     }
 
 }
