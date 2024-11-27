@@ -13,7 +13,11 @@ public class PlayerWeaponController : MonoBehaviour
         OnPlayerWeaponsUpdated?.Invoke();
     }
 
-    
+    public int currentAmmoCount;
+
+    public int totalBulletCount;
+
+
     [SerializeField]
     public List<GameObject> weapons;
 
@@ -45,6 +49,9 @@ public class PlayerWeaponController : MonoBehaviour
         {
             BuyWeapon();
         }
+        currentAmmoCount = weapons[selectedWeapon].GetComponent<FirearmController>()._magazineCount;
+        totalBulletCount = weapons[selectedWeapon].GetComponent<FirearmController>()._totalBulletCount;
+        
     }
     void weaponChange(int index, bool newWeapon = false)
     {
