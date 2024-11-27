@@ -46967,7 +46967,7 @@ GameObject:
   - component: {fileID: 1156932372}
   - component: {fileID: 1156932371}
   - component: {fileID: 1156932370}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49416,7 +49416,7 @@ GameObject:
   - component: {fileID: 1220292908}
   - component: {fileID: 1220292910}
   - component: {fileID: 1220292911}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wallbuy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -61257,7 +61257,7 @@ GameObject:
   - component: {fileID: 1475902345}
   - component: {fileID: 1475902344}
   - component: {fileID: 1475902343}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91756,7 +91756,7 @@ GameObject:
   - component: {fileID: 4472676144647260025}
   - component: {fileID: 8260498173865023475}
   - component: {fileID: 3393497718044100956}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Foregrip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94594,7 +94594,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7592748900607153472}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SMG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94610,7 +94610,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8710113354943595548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94778,7 +94778,7 @@ GameObject:
   - component: {fileID: 7163536340885725781}
   - component: {fileID: 2269573709379715799}
   - component: {fileID: 563159322544957046}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94796,7 +94796,7 @@ GameObject:
   - component: {fileID: 3142310874983893353}
   - component: {fileID: 6763282214676729914}
   - component: {fileID: 1148589056679435015}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94919,7 +94919,7 @@ GameObject:
   - component: {fileID: 6011954774188348648}
   - component: {fileID: 4643997731016707228}
   - component: {fileID: 5474382830530690389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Magazine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
