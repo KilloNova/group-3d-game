@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 4131006527150624260}
   - component: {fileID: 3559959417582602345}
   - component: {fileID: 637930836414402438}
+  - component: {fileID: 6724003568806503723}
   m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
@@ -146,6 +147,7 @@ MonoBehaviour:
   _magazineCount: 30
   maxMagazineCount: 30
   _totalBulletCount: 150
+  animator: {fileID: 6724003568806503723}
   fireState: 0
   spread_shotCount: 0
   fireModeType: 2
@@ -246,6 +248,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &6724003568806503723
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5331123997232977569}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8fe65ae053b46bd4d9742e7b7c4cfefd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5888104195058318857
 GameObject:
   m_ObjectHideFlags: 0

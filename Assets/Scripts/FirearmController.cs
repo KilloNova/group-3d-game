@@ -43,6 +43,9 @@ public class FirearmController : MonoBehaviour
 
     public int _totalBulletCount;
 
+    [SerializeField]
+    private Animator animator;
+
     public enum FireState {
         Ready,
         Reloading,
@@ -122,7 +125,7 @@ public class FirearmController : MonoBehaviour
                  Vector3 forward = bulletSpawnPoint.forward;
                 // Randomize the forward direction slightly
                 float spreadAngle = 5.0f; // Maximum spread angle
-                float minSpreadAngle = 2.0f; // Minimum spread angle
+                float minSpreadAngle = 1.0f; // Minimum spread angle
 
                 // Generate a random spread angle within the range of minSpreadAngle to spreadAngle
                 float randomX = UnityEngine.Random.Range(minSpreadAngle, spreadAngle) * (UnityEngine.Random.value > 0.5f ? 1 : -1);
@@ -151,8 +154,12 @@ public class FirearmController : MonoBehaviour
     {
         ResetFireState();   
         AudioSource audioSource = GetComponent<AudioSource>();
+        if(fireModeType != FireModeType.Spread)
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomly set pitch between 0.9 and 1.1
-        audioSource.Play();        _magazineCount--;
+        audioSource.Play();       
+        _magazineCount--;
+        animator.Play("Idle", -1, 0f); // Reset animation to start
+        animator.SetTrigger("recoil");
         if(_magazineCount == 0)
         {
             Reload();

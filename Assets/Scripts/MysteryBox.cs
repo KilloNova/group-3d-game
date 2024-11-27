@@ -5,22 +5,24 @@ using UnityEngine;
 public class MysteryBox : PurchasePoint
 {
 
-    private void OnEnable()
-    {
-    //    FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated += HandlePlayerWeaponsUpdated;
-    }
+    
+    string folderName = "Prefabs/Weapons/Firearms";
+    public List<GameObject> weapons;
 
-    private void OnDisable()
-    {
-       // FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated -= HandlePlayerWeaponsUpdated;
-    }
 
     [SerializeField]
     private bool purchaseLockout;
 
     float purchaseLockoutDelay = 3f;
 
-    public void HandlePlayerWeaponsUpdated()
+    
+    protected override void Update()
+    {
+        base.Update();
+        
+    }
+
+    protected override void HandlePlayerWeaponsUpdated()
     {
         LoadPrefabsFromFolder(folderName);
         List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
@@ -41,22 +43,15 @@ public class MysteryBox : PurchasePoint
     }
 
     List<GameObject> RemoveDuplicates(List<GameObject> originalList)
-{
-    HashSet<GameObject> uniqueItems = new HashSet<GameObject>(originalList);
-    return new List<GameObject>(uniqueItems);
-}
-
-    public void erase()
     {
-        List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
-        foreach (GameObject weapon in playerWeapons)
-        {
-            weapons.Remove(weapon);
-        }
+        HashSet<GameObject> uniqueItems = new HashSet<GameObject>(originalList);
+        return new List<GameObject>(uniqueItems);
     }
 
-    string folderName = "Prefabs/Weapons/Firearms";
-    public List<GameObject> weapons;
+
+    
+
+
 
     // Start is called before the first frame update
     void Start()

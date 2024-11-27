@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 8472656551245848366}
   - component: {fileID: 657509246714740617}
   - component: {fileID: 5535088274679070638}
+  - component: {fileID: 9074876117565714472}
   m_Layer: 0
   m_Name: SMG
   m_TagString: Untagged
@@ -95,6 +96,7 @@ MonoBehaviour:
   _magazineCount: 50
   maxMagazineCount: 50
   _totalBulletCount: 300
+  animator: {fileID: 9074876117565714472}
   fireState: 0
   spread_shotCount: 0
   fireModeType: 2
@@ -195,6 +197,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &9074876117565714472
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835774263925983479}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8fe65ae053b46bd4d9742e7b7c4cfefd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2256487559352622564
 GameObject:
   m_ObjectHideFlags: 0

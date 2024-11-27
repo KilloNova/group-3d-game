@@ -124,11 +124,11 @@ public class PlayerWeaponController : MonoBehaviour
         weaponChange(weapons.Count - 1);
         }
         NotifyWeaponChange();
-        if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.MysteryBox)
-        {
-            MysteryBox box = (MysteryBox)nearbyPurchasePoint;
-        box.HandlePlayerWeaponsUpdated();
-       }
+    //     if(nearbyPurchasePoint.purchasePointType == PurchasePoint.PurchasePointType.MysteryBox)
+    //     {
+    //         MysteryBox box = (MysteryBox)nearbyPurchasePoint;
+    //     box.HandlePlayerWeaponsUpdated();
+    //    }
 
         
     }

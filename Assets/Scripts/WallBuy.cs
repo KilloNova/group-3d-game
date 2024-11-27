@@ -11,7 +11,10 @@ public class WallBuy : PurchasePoint
     private GameObject weaponAvailibleToPurchase;
 
     public bool purchased;
+
     
+    [SerializeField]
+    private GameObject visualObject;
 
     void Start()
     {
@@ -29,5 +32,19 @@ public class WallBuy : PurchasePoint
         return null;
     }
 
-    
+    protected override void HandlePlayerWeaponsUpdated()
+    {
+        List<GameObject> playerWeapons = FindObjectOfType<PlayerWeaponController>().weapons;
+        foreach (GameObject item in playerWeapons)
+        {
+            if(item.GetComponent<FirearmController>()._weaponName.Equals(weaponAvailibleToPurchase.GetComponent<FirearmController>()._weaponName))
+            {
+                purchased = true;
+                visualObject.SetActive(false);
+                break;
+            }
+            visualObject.SetActive(true);
+            purchased = false;
+        }
+    }
 }

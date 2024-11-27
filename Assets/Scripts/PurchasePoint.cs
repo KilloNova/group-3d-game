@@ -23,16 +23,35 @@ public abstract class PurchasePoint : MonoBehaviour
     }
 
     public PurchasePointType purchasePointType;
+    protected bool initialized;
 
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         if(player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
         }
+        if(player != null && !initialized)
+        {
+            Subscribe();
+        }
     }
+
+    private void Subscribe()
+    {
+        initialized = true;
+        FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated += HandlePlayerWeaponsUpdated;
+    }
+
+    private void OnDisable()
+    {
+        FindObjectOfType<PlayerWeaponController>().OnPlayerWeaponsUpdated -= HandlePlayerWeaponsUpdated;
+    }
+
+    protected abstract void HandlePlayerWeaponsUpdated();
+    
 
     void OnTriggerExit(Collider other)
     {
