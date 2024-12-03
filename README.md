@@ -6,7 +6,7 @@ Destroying nazi zombies but in a medieval castle. Round based. Mega destruction.
 
 ## Roles
 Roles:
-Mateos: Player
+Mateos: Player / Git Management
 Emillio: Map assets 
 Ryan: Weapons
 Derk: Zombies
