@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4436779440464005100}
   - component: {fileID: 4747489215712417968}
   - component: {fileID: 1231682015027194253}
-  m_Layer: 0
+  - component: {fileID: 4388729081401204319}
+  m_Layer: 7
   m_Name: Bullet_Small
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -48,7 +49,7 @@ MonoBehaviour:
   ready: 0
   collisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!96 &1231682015027194253
 TrailRenderer:
   serializedVersion: 3
@@ -162,3 +163,24 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!65 &4388729081401204319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042282210877581739}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: -0.509}

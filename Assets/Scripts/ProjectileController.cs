@@ -55,4 +55,5 @@ public class ProjectileController : MonoBehaviour
             transform.position += lfd.direction * lfd.speed;
         }
     }
+    
 }

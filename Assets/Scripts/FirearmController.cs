@@ -31,7 +31,7 @@ public class FirearmController : MonoBehaviour
     private int fireReloadDelayCounterMax;
 
     [SerializeField]
-    private float damage;
+    private float damage = 1f;
 
     [SerializeField]
     private LayerMask collisionMask;

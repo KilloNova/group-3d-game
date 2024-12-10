@@ -23,10 +23,9 @@ public class ZombieController : MonoBehaviour
     {
         agent.SetDestination(player.transform.position);
     }
-
     public void impact(float damage)
     {
-        if (gameObject.CompareTag("PlayerAttack"))
+        if (gameObject.CompareTag("Projectile"))
         {
             health -= damage;
 
@@ -36,30 +35,28 @@ public class ZombieController : MonoBehaviour
                 Destroy(gameObject); // Destroy the enemy
             }
         }
-    }
+    } 
 
-/*
-    private void OnCollisionEnter(Collision collision)
+
+
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.collider.name == "PlayerTestObject")
+        // Check if the colliding object is a projectile
+        if (other.CompareTag("Projectile"))
         {
-            HeartScript.TakeDamage(damageAmount);
-        }
-        //Check if collided with the player
+            Debug.Log("Projectile hit zombie!"); // Add debugging
 
-        if (collision.gameObject.CompareTag("PlayerAttack"))
-        {
-            health -= 1;
-
-            // Destroy the attack object upon collision
-            Destroy(collision.gameObject);
-
-            // Check if health has reached zero
-            if (health <= 0)
+            // Access the damage value from the projectile
+            ProjectileController projectile = other.GetComponent<ProjectileController>();
+            if (projectile != null)
             {
-                Destroy(gameObject); // Destroy the enemy
+                impact(projectile.lfd.damage); // Apply damage to the zombie
             }
+
+            // Destroy the projectile after it hits the zombie
+            Destroy(other.gameObject);
         }
     }
-    */
+
+
 }
