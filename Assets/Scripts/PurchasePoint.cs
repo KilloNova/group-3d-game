@@ -64,7 +64,6 @@ public abstract class PurchasePoint : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        Debug.Log("CLEAN");
         if(other.gameObject.Equals(player))
         {
             inBuyZone = true;
