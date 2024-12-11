@@ -121,7 +121,7 @@ public class PlayerWeaponController : MonoBehaviour
         currentAmmoCount = currentWeapon._magazineCount;
         totalBulletCount = currentWeapon._totalBulletCount;
         currentWeaponName = currentWeapon._weaponName;
-
+        
         foreach (var item in weapons)
         {
             if(!currentWeapons.Contains(item.GetComponent<FirearmController>()._weaponName))

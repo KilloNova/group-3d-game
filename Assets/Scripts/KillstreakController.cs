@@ -21,6 +21,9 @@ public class KillstreakController : MonoBehaviour
     private float time = 15f;
 
     [SerializeField]
+    private Light killstreakLight;
+
+    [SerializeField]
     private PlayerWeaponController playerWeaponController;
 
     [SerializeField]
@@ -66,7 +69,7 @@ public class KillstreakController : MonoBehaviour
     {
         mainCamera.gameObject.SetActive(false);
         killstreakCamera.gameObject.SetActive(true);
-
+        killstreakLight.enabled = true;
         loaded = false;
         gun.enabled = false;
         animator.Play("Waiting");
@@ -76,6 +79,7 @@ public class KillstreakController : MonoBehaviour
     private IEnumerator ExitState(float time)
     {
         yield return new WaitForSeconds(time);
+        killstreakLight.enabled = false;
         loaded = false;
         gun.enabled = false;
         mainCamera.gameObject.SetActive(true);
