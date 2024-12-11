@@ -18,6 +18,15 @@ public class PlayerWeaponController : MonoBehaviour
         zombie.OnZombieDeath += PlayerKilledZombie;
     }
 
+    public delegate void ActivateKillstreakHandler();
+    // Declare the event using the delegate
+    public event ActivateKillstreakHandler OnActivateKillstreak;
+
+    // Method to invoke the ActivateKillstreak event
+    
+    [SerializeField]
+    private bool killstreak = false;
+
     public int currentAmmoCount;
 
     public int totalBulletCount;
@@ -36,11 +45,54 @@ public class PlayerWeaponController : MonoBehaviour
     private PurchasePoint nearbyPurchasePoint;
 
     public int money;
+
+    [SerializeField]
+    private KillstreakController killstreakController;
+
+    [SerializeField]
+    private Camera killstreakCamera;
+
+    bool invincible = true;
     // Start is called before the first frame update
     void Start()
     {
         weapons.Capacity = 4;
+        killstreakController = GameObject.FindFirstObjectByType<KillstreakController>();
     } 
+
+    private void OnEnable()
+    {
+        killstreakController.KillstreakEnd += EndKillstreak;
+    }
+
+    private void OnDisable()
+    {
+        killstreakController.KillstreakEnd -= EndKillstreak;
+    }
+
+    private void EndKillstreak()
+    {
+        Debug.LogError("ended killstreak");
+        weapons[selectedWeapon].GetComponent<FirearmController>().inHand = true;
+        invincible = false;
+        transform.root.GetComponent<Movement>().enabled = true;
+        killstreak = false;
+        killstreakCamera.gameObject.SetActive(false);
+    }
+
+    public void ActivateKillstreak()
+    {
+        killstreakCamera.gameObject.SetActive(true);
+        transform.root.GetComponent<Movement>().enabled = false;
+        killstreak = true;
+        invincible = true;
+        OnActivateKillstreak?.Invoke();
+        foreach (var item in weapons)
+        {
+            item.GetComponent<FirearmController>().inHand = false;
+        }
+
+    }
 
     private void PlayerKilledZombie(ZombieController zombie, int bounty)
     {
@@ -49,6 +101,8 @@ public class PlayerWeaponController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(killstreak)
+        return;
         for(int i = (int)KeyCode.Alpha1; i < (int)KeyCode.Alpha4; i++)
         if(Input.GetKey((KeyCode)i))
         {
@@ -61,6 +115,11 @@ public class PlayerWeaponController : MonoBehaviour
         currentAmmoCount = weapons[selectedWeapon].GetComponent<FirearmController>()._magazineCount;
         totalBulletCount = weapons[selectedWeapon].GetComponent<FirearmController>()._totalBulletCount;
         
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            ActivateKillstreak();
+        }
+
     }
     void weaponChange(int index, bool newWeapon = false)
     {
@@ -125,7 +184,7 @@ public class PlayerWeaponController : MonoBehaviour
         
         if(newWeapon == null)
         return;
-        GameObject spawnedWeapon = Instantiate(newWeapon, transform);
+        GameObject spawnedWeapon = Instantiate(newWeapon, weaponSpawnPoint);
         spawnedWeapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         spawnedWeapon.transform.SetPositionAndRotation(weaponSpawnPoint.position, weaponSpawnPoint.rotation);
 
