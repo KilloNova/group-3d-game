@@ -25,12 +25,37 @@ public class ZombieController : MonoBehaviour
     private int immunityCounter = 0;
 
     // Start is called before the first frame update
+    /*
     void Start()
     {
         currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.GetComponentInChildren<PlayerWeaponController>().DontForgetToLikeAndSubscribe(this);
     }
+    */
+    void Start()
+    {
+        currentHealth = maxHealth;
+
+        // Ensure the player reference is correctly set
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogError("Player GameObject with tag 'Player' not found!");
+        }
+        else
+        {
+            player.transform.GetComponentInChildren<PlayerWeaponController>()?.DontForgetToLikeAndSubscribe(this);
+        }
+
+        // Ensure the NavMeshAgent is correctly set
+        agent = GetComponent<NavMeshAgent>();
+        if (agent == null)
+        {
+            Debug.LogError($"{gameObject.name} is missing a NavMeshAgent component!");
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
