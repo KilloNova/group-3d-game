@@ -36,6 +36,7 @@ public class ProjectileController : MonoBehaviour
         FireProjectile();
     }
 
+/*
     void FireProjectile()
     {
         RaycastHit hit;
@@ -55,5 +56,33 @@ public class ProjectileController : MonoBehaviour
             transform.position += lfd.direction * lfd.speed;
         }
     }
-    
+    */
+
+    void FireProjectile()
+    {
+        RaycastHit hit;
+        Color[] colors = new Color[3] { Color.red, Color.green, Color.blue };
+        Debug.DrawLine(transform.position, transform.position + lfd.direction * lfd.speed, colors[Time.frameCount % 3], 3f);
+
+        if (Physics.Raycast(transform.position, lfd.direction, out hit, lfd.speed, collisionMask))
+        {
+            transform.position = hit.point; // Move to the hit point
+            Debug.Log($"Hit: {hit.collider.name}");
+
+            // Check if the hit object is a zombie
+            ZombieController zombie = hit.collider.GetComponent<ZombieController>();
+            if (zombie != null)
+            {
+                zombie.OnRaycastHit(lfd.damage); // Notify the zombie of the raycast hit
+            }
+
+            Destroy(gameObject); // Destroy the projectile
+        }
+        else
+        {
+            // No collision, move the projectile forward
+            transform.position += lfd.direction * lfd.speed;
+        }
+    }
+
 }

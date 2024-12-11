@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4747489215712417968}
   - component: {fileID: 1231682015027194253}
   - component: {fileID: 4388729081401204319}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: Bullet_Small
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ MonoBehaviour:
   ready: 0
   collisionMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 8
 --- !u!96 &1231682015027194253
 TrailRenderer:
   serializedVersion: 3

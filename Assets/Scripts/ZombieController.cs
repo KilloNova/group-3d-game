@@ -6,12 +6,10 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
-    public float health = 5;
-    public NavMeshAgent agent;
+    public float health = 5; // Zombie's health
+    public NavMeshAgent agent; // Navigation component
+    public GameObject player; // Reference to the player object
 
-    public GameObject player;
-
-    public 
     // Start is called before the first frame update
     void Start()
     {
@@ -21,42 +19,54 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Set the zombie's destination to the player's position
         agent.SetDestination(player.transform.position);
     }
-    public void impact(float damage)
+
+    // Apply damage to the zombie
+    public void TakeDamage(float damage)
     {
-        if (gameObject.CompareTag("Projectile"))
+        health -= damage;
+
+        Debug.Log($"{gameObject.name} took {damage} damage! Remaining health: {health}");
+
+        // Check if the zombie's health reaches zero
+        if (health <= 0)
         {
-            health -= damage;
-
-            // Check if health has reached zero
-            if (health <= 0)
-            {
-                Destroy(gameObject); // Destroy the enemy
-            }
+            Die();
         }
-    } 
+    }
 
+    // Handle zombie death
+    private void Die()
+    {
+        Debug.Log($"{gameObject.name} has died!");
+        Destroy(gameObject); // Destroy the zombie object
+    }
 
-
+    // Detect collisions with projectiles
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the colliding object is a projectile
         if (other.CompareTag("Projectile"))
         {
-            Debug.Log("Projectile hit zombie!"); // Add debugging
+            Debug.Log("Projectile hit zombie!");
 
-            // Access the damage value from the projectile
+            // Get the damage value from the projectile
             ProjectileController projectile = other.GetComponent<ProjectileController>();
             if (projectile != null)
             {
-                impact(projectile.lfd.damage); // Apply damage to the zombie
+                TakeDamage(projectile.lfd.damage); // Apply damage to the zombie
             }
 
-            // Destroy the projectile after it hits the zombie
+            // Destroy the projectile after it hits
             Destroy(other.gameObject);
         }
     }
 
-
+    // Handle being hit by a raycast
+    public void OnRaycastHit(float damage)
+    {
+        Debug.Log($"Zombie {gameObject.name} hit by raycast!");
+        TakeDamage(damage); // Apply raycast damage
+    }
 }
