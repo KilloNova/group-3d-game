@@ -18,6 +18,7 @@ public class ZombieController : MonoBehaviour
 
     public event Action<ZombieController, int> OnZombieDeath;
 
+    bool dead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -53,6 +54,10 @@ public class ZombieController : MonoBehaviour
 
     private void Die()
     {
+        if(dead)
+        return;
+
+        dead = true;
         OnZombieDeath?.Invoke(this, bounty);
         Debug.Log($"{gameObject.name} has died!");
         Destroy(gameObject); // Remove the zombie from the scene
