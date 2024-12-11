@@ -352,7 +352,7 @@ MonoBehaviour:
   fireState: 0
   spread_shotCount: 0
   fireModeType: 1
-  _weaponName: Pistol
+  _weaponName: M1911
 --- !u!82 &8291429329048993918
 AudioSource:
   m_ObjectHideFlags: 0

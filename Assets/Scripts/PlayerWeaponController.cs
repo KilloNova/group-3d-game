@@ -31,6 +31,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     public int totalBulletCount;
 
+    public string currentWeaponName;
+
 
     [SerializeField]
     public List<GameObject> weapons;
@@ -112,9 +114,10 @@ public class PlayerWeaponController : MonoBehaviour
         {
             BuyWeapon();
         }
-        currentAmmoCount = weapons[selectedWeapon].GetComponent<FirearmController>()._magazineCount;
-        totalBulletCount = weapons[selectedWeapon].GetComponent<FirearmController>()._totalBulletCount;
-        
+        FirearmController currentWeapon = weapons[selectedWeapon].GetComponent<FirearmController>();
+        currentAmmoCount = currentWeapon._magazineCount;
+        totalBulletCount = currentWeapon._totalBulletCount;
+        currentWeaponName = currentWeapon._weaponName;
         if(Input.GetKeyDown(KeyCode.K))
         {
             ActivateKillstreak();

@@ -99,7 +99,7 @@ MonoBehaviour:
   fireState: 0
   spread_shotCount: 0
   fireModeType: 2
-  _weaponName: P90
+  _weaponName: Uzi
 --- !u!82 &5535088274679070638
 AudioSource:
   m_ObjectHideFlags: 0

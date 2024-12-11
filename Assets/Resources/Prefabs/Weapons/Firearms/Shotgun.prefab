@@ -99,7 +99,7 @@ MonoBehaviour:
   fireState: 0
   spread_shotCount: 8
   fireModeType: 3
-  _weaponName: M870
+  _weaponName: Bennelli M4
 --- !u!82 &7766468197236983290
 AudioSource:
   m_ObjectHideFlags: 0

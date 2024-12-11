@@ -68,7 +68,7 @@ MonoBehaviour:
   fireState: 0
   spread_shotCount: 0
   fireModeType: 2
-  _weaponName: M4
+  _weaponName: M4 Carbine
 --- !u!82 &637930836414402438
 AudioSource:
   m_ObjectHideFlags: 0
