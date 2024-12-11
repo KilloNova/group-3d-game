@@ -13,6 +13,11 @@ public class PlayerWeaponController : MonoBehaviour
         OnPlayerWeaponsUpdated?.Invoke();
     }
 
+    public void DontForgetToLikeAndSubscribe(ZombieController zombie)
+    {
+        zombie.OnZombieDeath += PlayerKilledZombie;
+    }
+
     public int currentAmmoCount;
 
     public int totalBulletCount;
@@ -37,6 +42,10 @@ public class PlayerWeaponController : MonoBehaviour
         weapons.Capacity = 4;
     } 
 
+    private void PlayerKilledZombie(ZombieController zombie, int bounty)
+    {
+        money += bounty;
+    }
     // Update is called once per frame
     void Update()
     {

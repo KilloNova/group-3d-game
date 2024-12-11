@@ -31,7 +31,8 @@ public class ProjectileController : MonoBehaviour
 
     void Start()
     {
-        collisionMask = LayerMask.GetMask("Enemy");
+        //remove this line, the collision mask is set by the FirearmController script
+        //collisionMask = LayerMask.GetMask("Enemy");
     }
     // Update is called once per frame
     void Update()
@@ -74,7 +75,7 @@ public class ProjectileController : MonoBehaviour
             Debug.Log($"Hit: {hit.collider.name}");
 
             // Check if the hit object is a zombie
-            ZombieController zombie = hit.collider.GetComponent<ZombieController>();
+            hit.collider.TryGetComponent(out ZombieController zombie);
             if (zombie != null)
             {
                 zombie.OnRaycastHit(lfd.damage); // Notify the zombie of the raycast hit

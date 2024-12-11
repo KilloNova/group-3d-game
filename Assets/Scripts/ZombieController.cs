@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
+using System;
 
 public class ZombieController : MonoBehaviour
 {
@@ -13,10 +14,16 @@ public class ZombieController : MonoBehaviour
     public NavMeshAgent agent; // Navigation component
     public GameObject player; // Reference to the player object
 
+    public int bounty;
+
+    public event Action<ZombieController, int> OnZombieDeath;
+
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        player.transform.GetComponentInChildren<PlayerWeaponController>().DontForgetToLikeAndSubscribe(this);
         currentHealth = maxHealth;
     }
 
@@ -46,6 +53,7 @@ public class ZombieController : MonoBehaviour
 
     private void Die()
     {
+        OnZombieDeath?.Invoke(this, bounty);
         Debug.Log($"{gameObject.name} has died!");
         Destroy(gameObject); // Remove the zombie from the scene
     }
