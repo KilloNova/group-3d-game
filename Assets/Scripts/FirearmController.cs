@@ -13,6 +13,12 @@ public class FirearmController : MonoBehaviour
     private GameObject bulletPrefab;
 
     [SerializeField]
+    private GameObject explosionPrefab;
+
+    [SerializeField]
+    private GameObject gunFlashPrefab;
+
+    [SerializeField]
     private Transform bulletSpawnPoint;
 
     [SerializeField]
@@ -137,7 +143,8 @@ public class FirearmController : MonoBehaviour
                 // Apply the spread rotation to the forward vector
                 Vector3 randomizedForward = spreadRotation * forward;
                  GameObject spawnedBullet = Instantiate(bulletPrefab);
-                 spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, randomizedForward, bulletSpeed, bulletLifeTime, damage, collisionMask);
+                 spawnedBullet.GetComponent<ProjectileController>().Initialize(
+                    bulletSpawnPoint.position, randomizedForward, bulletSpeed, bulletLifeTime, damage, collisionMask, explosionPrefab);
                 tempBulletList[i] = spawnedBullet.GetComponent<ProjectileController>();
             }
             for (int i = 0; i < spread_shotCount; i++)
@@ -160,10 +167,12 @@ public class FirearmController : MonoBehaviour
         _magazineCount--;
         animator.Play("Idle", -1, 0f); // Reset animation to start
         animator.SetTrigger("recoil");
+        GameObject spawnedGunFlash = Instantiate(gunFlashPrefab, bulletSpawnPoint);
+        Destroy(spawnedGunFlash, 0.15f);
         if(_magazineCount == 0)
         {
-            Reload();
             fireState = FireState.Empty;
+            Reload();
         }
     }
 
@@ -199,7 +208,7 @@ public class FirearmController : MonoBehaviour
     private void Fire()
     {
         GameObject spawnedBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-        spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask);
+        spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask, explosionPrefab);
         spawnedBullet.GetComponent<ProjectileController>().ready = true;
         FireEnd();
     }

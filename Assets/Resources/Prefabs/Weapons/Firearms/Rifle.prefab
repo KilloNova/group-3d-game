@@ -101,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4131006527150624260
 Transform:
   m_ObjectHideFlags: 0
@@ -135,6 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inHand: 0
   bulletPrefab: {fileID: 2042282210877581739, guid: c93da85856f304da9bf815dc37f4ec40, type: 3}
+  explosionPrefab: {fileID: 0}
+  gunFlashPrefab: {fileID: 0}
   bulletSpawnPoint: {fileID: 4312389509612070445}
   bulletSpeed: 2
   bulletLifeTime: 5
