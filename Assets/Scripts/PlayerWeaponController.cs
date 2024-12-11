@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerWeaponController : MonoBehaviour
@@ -32,6 +33,8 @@ public class PlayerWeaponController : MonoBehaviour
     public int totalBulletCount;
 
     public string currentWeaponName;
+
+    public List<string> currentWeapons;
 
 
     [SerializeField]
@@ -118,6 +121,20 @@ public class PlayerWeaponController : MonoBehaviour
         currentAmmoCount = currentWeapon._magazineCount;
         totalBulletCount = currentWeapon._totalBulletCount;
         currentWeaponName = currentWeapon._weaponName;
+
+        foreach (var item in weapons)
+        {
+            if(!currentWeapons.Contains(item.GetComponent<FirearmController>()._weaponName))
+            {
+                currentWeapons.Add(item.GetComponent<FirearmController>()._weaponName);
+            }
+        }
+
+        // if(weapons.Count != currentWeapons.Count)
+        // {
+        //     currentWeapons.RemoveAll(weapon => !weapons.Any(w => w.GetComponent<FirearmController>()._weaponName == weapon));
+        // }
+
         if(Input.GetKeyDown(KeyCode.K))
         {
             ActivateKillstreak();
@@ -153,6 +170,11 @@ public class PlayerWeaponController : MonoBehaviour
         weapons.Insert(selectedWeapon, newWeapon);
         
         weaponChange(selectedWeapon, true);
+        currentWeapons.Clear();
+        foreach (var item in weapons)
+        {
+            currentWeapons.Add(item.GetComponent<FirearmController>()._weaponName);
+        }
     }
 
 
