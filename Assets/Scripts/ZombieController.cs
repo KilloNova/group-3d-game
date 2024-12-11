@@ -10,6 +10,7 @@ public class ZombieController : MonoBehaviour
     [SerializeField]
     private float maxHealth = 100f;
 
+    [SerializeField]
     private float currentHealth;
     public NavMeshAgent agent; // Navigation component
     public GameObject player; // Reference to the player object
@@ -20,19 +21,25 @@ public class ZombieController : MonoBehaviour
 
     bool dead = false;
 
+    [SerializeField]
+    private int immunityCounter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
         player = GameObject.FindGameObjectWithTag("Player");
         player.transform.GetComponentInChildren<PlayerWeaponController>().DontForgetToLikeAndSubscribe(this);
-        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Set the zombie's destination to the player's position
-        agent.SetDestination(player.transform.position);
+        if(immunityCounter > 0)
+        immunityCounter--;
+        //Set the zombie's destination to the player's position
+       agent.SetDestination(player.transform.position);
+
     }
 
     // Apply damage to the zombie
@@ -49,6 +56,20 @@ public class ZombieController : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("SplashDamage"))
+        {
+            if(immunityCounter == 0)
+            {
+            Debug.LogError("splash");
+            immunityCounter = 10;
+            TakeDamage(40f);
+            }
+            
         }
     }
 

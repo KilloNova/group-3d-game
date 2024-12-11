@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1231682015027194253}
   - component: {fileID: 4388729081401204319}
   m_Layer: 3
-  m_Name: Bullet_Small
+  m_Name: Bullet_Heavy
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a58de6c0260334b9192a50f3559b9df4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  splashDamageObject: {fileID: 4998326672189628209, guid: 7985bb550440ae1429213db391542551, type: 3}
+  splashDamage: 0
   ExplosionPrefab: {fileID: 0}
   ready: 0
   collisionMask:
@@ -103,7 +105,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.04166603
+        value: 0.14881325
         inSlope: 0
         outSlope: 0
         tangentMode: 0

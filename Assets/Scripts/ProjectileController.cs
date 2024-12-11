@@ -13,6 +13,10 @@ public class ProjectileController : MonoBehaviour
         public float lifeTime;
         public float damage;
     }
+    [SerializeField]
+    private GameObject splashDamageObject;
+
+    public bool splashDamage = false;
     public GameObject ExplosionPrefab;
     public bool ready = false;
 
@@ -51,8 +55,14 @@ public class ProjectileController : MonoBehaviour
             {
                 zombie.OnRaycastHit(lfd.damage); // Notify the zombie of the raycast hit
             }
-            else
+
             Instantiate(ExplosionPrefab, hit.point, transform.rotation);
+
+            if(splashDamage)
+            {
+                Destroy(Instantiate(splashDamageObject, hit.point, transform.rotation), 0.25f);
+            }
+
             Destroy(gameObject); // Destroy the projectile
         }
         else

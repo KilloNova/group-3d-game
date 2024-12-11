@@ -67,7 +67,8 @@ public class FirearmController : MonoBehaviour
         Semi,
         Auto,
         Spread,
-        Spread_Auto
+        Spread_Auto,
+        Heavy
     }
 
     [SerializeField]
@@ -86,6 +87,12 @@ public class FirearmController : MonoBehaviour
 
         switch (fireModeType)
         {
+            case FireModeType.Heavy:
+            if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
+            {
+                Fire();
+            }
+            break;
             case FireModeType.Auto:
             if(Input.GetKey(KeyCode.Mouse0) && fireState == FireState.Ready)
             {
@@ -110,12 +117,9 @@ public class FirearmController : MonoBehaviour
         }
 
 
-        if(fireModeType == FireModeType.Auto)
-        {
-            
-        }
+
         
-        if(Input.GetKeyDown(KeyCode.R) && _magazineCount != maxMagazineCount)
+        if(Input.GetKeyDown(KeyCode.R) && _magazineCount != maxMagazineCount && fireState != FireState.Empty)
         {
             Reload();
         }
@@ -161,7 +165,7 @@ public class FirearmController : MonoBehaviour
     {
         ResetFireState();   
         AudioSource audioSource = GetComponent<AudioSource>();
-        if(fireModeType != FireModeType.Spread)
+        if(fireModeType != FireModeType.Spread && fireModeType != FireModeType.Auto)
         audioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f); // Randomly set pitch between 0.9 and 1.1
         audioSource.Play();       
         _magazineCount--;
@@ -171,8 +175,9 @@ public class FirearmController : MonoBehaviour
         Destroy(spawnedGunFlash, 0.15f);
         if(_magazineCount == 0)
         {
-            fireState = FireState.Empty;
+            animator.StopPlayback();
             Reload();
+            fireState = FireState.Empty;
         }
     }
 
@@ -187,6 +192,12 @@ public class FirearmController : MonoBehaviour
     {
         if(fireState == FireState.Reloading || fireState == FireState.Cycling)
         {
+            return;
+        }
+
+        if(_totalBulletCount <= 0)
+        {
+            fireState = FireState.Empty;
             return;
         }
         Debug.Log("reloading " + _weaponName);
@@ -210,6 +221,10 @@ public class FirearmController : MonoBehaviour
         GameObject spawnedBullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
         spawnedBullet.GetComponent<ProjectileController>().Initialize(bulletSpawnPoint.position, bulletSpawnPoint.forward, bulletSpeed, bulletLifeTime, damage, collisionMask, explosionPrefab);
         spawnedBullet.GetComponent<ProjectileController>().ready = true;
+        if(fireModeType == FireModeType.Heavy)
+        {
+            spawnedBullet.GetComponent<ProjectileController>().splashDamage = true;
+        }
         FireEnd();
     }
     void HandleFireState()
