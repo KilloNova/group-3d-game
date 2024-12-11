@@ -6,7 +6,10 @@ using UnityEngine.AI;
 
 public class ZombieController : MonoBehaviour
 {
-    public float health = 5; // Zombie's health
+    [SerializeField]
+    private float maxHealth = 100f;
+
+    private float currentHealth;
     public NavMeshAgent agent; // Navigation component
     public GameObject player; // Reference to the player object
 
@@ -14,6 +17,7 @@ public class ZombieController : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -24,49 +28,25 @@ public class ZombieController : MonoBehaviour
     }
 
     // Apply damage to the zombie
-    public void TakeDamage(float damage)
+    public void OnRaycastHit(float damage)
     {
-        health -= damage;
+        TakeDamage(damage);
+    }
 
-        Debug.Log($"{gameObject.name} took {damage} damage! Remaining health: {health}");
+    private void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {currentHealth}");
 
-        // Check if the zombie's health reaches zero
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    // Handle zombie death
     private void Die()
     {
         Debug.Log($"{gameObject.name} has died!");
-        Destroy(gameObject); // Destroy the zombie object
-    }
-
-    // Detect collisions with projectiles
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Projectile"))
-        {
-            Debug.Log("Projectile hit zombie!");
-
-            // Get the damage value from the projectile
-            ProjectileController projectile = other.GetComponent<ProjectileController>();
-            if (projectile != null)
-            {
-                TakeDamage(projectile.lfd.damage); // Apply damage to the zombie
-            }
-
-            // Destroy the projectile after it hits
-            Destroy(other.gameObject);
-        }
-    }
-
-    // Handle being hit by a raycast
-    public void OnRaycastHit(float damage)
-    {
-        Debug.Log($"Zombie {gameObject.name} hit by raycast!");
-        TakeDamage(damage); // Apply raycast damage
+        Destroy(gameObject); // Remove the zombie from the scene
     }
 }

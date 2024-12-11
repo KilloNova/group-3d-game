@@ -29,6 +29,10 @@ public class ProjectileController : MonoBehaviour
 
     }
 
+    void Start()
+    {
+        collisionMask = LayerMask.GetMask("Enemy");
+    }
     // Update is called once per frame
     void Update()
     {
