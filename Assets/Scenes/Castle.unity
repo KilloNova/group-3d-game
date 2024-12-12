@@ -301,6 +301,7 @@ MonoBehaviour:
   jumpHeight: 2
   gravity: -9.81
   mouseSensitivity: 100
+  sprintCd: 2
 --- !u!136 &196400393
 CapsuleCollider:
   m_ObjectHideFlags: 0

@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float mouseSensitivity = 100.0f;
 
+    public float sprintCd = 0f;
+    private float sprintTimer = 2f;
+
     private Vector3 velocity;
     private bool isGrounded;
 
@@ -51,7 +54,25 @@ public class Movement : MonoBehaviour
         float moveZ = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * moveX + transform.forward * moveZ;
-        characterController.Move(move * speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.LeftShift) && sprintCd <= 0f)
+        {
+            characterController.Move(move * (speed + speed) * Time.deltaTime);
+            sprintTimer -= Time.deltaTime;
+            if (sprintTimer <= 0f)
+            {
+                sprintCd = 2f;
+            }
+        }
+        else
+        {
+            characterController.Move(move * speed * Time.deltaTime);
+            sprintCd -= Time.deltaTime;
+            if (sprintCd <= 0)
+            {
+                sprintTimer = 2f;
+                sprintCd = 0;
+            }
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
