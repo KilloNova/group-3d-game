@@ -7,6 +7,8 @@ public class Ammo : MonoBehaviour
     public PlayerWeaponController playerWeaponController; // Reference to the weapon controller
     public TextMeshProUGUI ammoText; // Reference to the TextMeshPro component
     public TextMeshProUGUI killText;
+
+    public TextMeshProUGUI inventoryText;
     public Image progressBar;
     void Start()
     {
@@ -24,6 +26,8 @@ public class Ammo : MonoBehaviour
         if (playerWeaponController != null && ammoText != null)
         {
             ammoText.text = $"{playerWeaponController.currentAmmoCount}/{playerWeaponController.totalBulletCount}";
+            inventoryText.text = string.Join(" ", playerWeaponController.currentWeapons);
+
         }
         if(!playerWeaponController.invincible)
         progressBar.fillAmount = (float)playerWeaponController.killAmount / playerWeaponController.maxKillAmount;

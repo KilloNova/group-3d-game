@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class Movement : MonoBehaviour
     private int playerHealth = 10;
 
     private int currentHealth;
+
+    private int maxHealth;
     private bool isGameOver = false;
 
     public float sprintCd = 0f;
@@ -37,6 +40,8 @@ public class Movement : MonoBehaviour
 
     private Transform playerCamera; // Reference to the camera
 
+    public Image ImageComponent;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -45,6 +50,8 @@ public class Movement : MonoBehaviour
         playerCamera = Camera.main.transform; // Use Camera.main to get the main camera
 
         currentHealth = playerHealth;
+        maxHealth = currentHealth;
+
     }
 
     void Update()
@@ -115,6 +122,14 @@ public class Movement : MonoBehaviour
         {
             Die();
         }
+
+
+            float healthPercentage = Mathf.Clamp01((float)currentHealth / maxHealth);
+            float alpha = 1f - healthPercentage;
+            Color color = ImageComponent.color;
+            color.a = alpha;
+            ImageComponent.color = color;
+        
     }
 
     private void Die()
