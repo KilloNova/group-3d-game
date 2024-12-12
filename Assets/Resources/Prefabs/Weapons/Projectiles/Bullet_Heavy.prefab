@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4747489215712417968}
   - component: {fileID: 1231682015027194253}
   - component: {fileID: 4388729081401204319}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Bullet_Heavy
   m_TagString: Projectile
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.14881325
+        value: 0.24405861
         inSlope: 0
         outSlope: 0
         tangentMode: 0

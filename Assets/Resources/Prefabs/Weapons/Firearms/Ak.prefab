@@ -57,7 +57,7 @@ MonoBehaviour:
   bulletLifeTime: 5
   fireCycleDelayCounterMax: 5
   fireReloadDelayCounterMax: 175
-  damage: 5
+  damage: 50
   collisionMask:
     serializedVersion: 2
     m_Bits: 192

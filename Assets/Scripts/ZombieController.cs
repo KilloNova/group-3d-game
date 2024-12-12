@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
 using System;
+using Unity.VisualScripting;
 
 public class ZombieController : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class ZombieController : MonoBehaviour
     private float currentHealth;
     public NavMeshAgent agent; // Navigation component
     public GameObject player; // Reference to the player object
+
+    public Transform dummyTarget;
 
     [SerializeField]
     private float attackRange = 2.5f; // Distance within which the zombie attacks
@@ -35,6 +38,13 @@ public class ZombieController : MonoBehaviour
 
     private bool isAttacking = false;
 
+    public Vector3 target;
+
+    public PlayerWeaponController playerWeaponController;
+
+    public KillstreakController killstreakController;
+
+    public GameManager gameManager;
     // Start is called before the first frame update
     /*
     void Start()
@@ -47,7 +57,9 @@ public class ZombieController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        playerWeaponController = gameManager.weaponController;
+        dummyTarget = GameObject.FindGameObjectWithTag("DummyTarget").transform;
         // Ensure the player reference is correctly set
         player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -65,16 +77,61 @@ public class ZombieController : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} is missing a NavMeshAgent component!");
         }
+
+        
+    }
+
+    private void StartKillstreak()
+    {
+        target = dummyTarget.position;
+    }
+
+    private void EndKillstreak()
+    {
+        target = player.transform.position;
     }
 
 
+
+
+
+    void OnEnable()
+    {
+        playerWeaponController.OnActivateKillstreak += StartKillstreak;
+        killstreakController.KillstreakEnd += EndKillstreak;
+    }
+
+    void OnDisable()
+    {
+        playerWeaponController.OnActivateKillstreak -= StartKillstreak;
+        killstreakController.KillstreakEnd -= EndKillstreak;
+
+    }
     // Update is called once per frame
     void Update()
     {
+
+        if(playerWeaponController == null)
+        {
+            playerWeaponController = FindFirstObjectByType<PlayerWeaponController>();
+        }
+        if(killstreakController == null)
+        {
+        killstreakController = FindFirstObjectByType<KillstreakController>();
+        }
+
+        if(playerWeaponController.invincible)
+        {
+            target = dummyTarget.position;
+        }
+        else
+        {
+            target = player.transform.position;
+        }
         if(immunityCounter > 0)
         immunityCounter--;
         //Set the zombie's destination to the player's position
-       agent.SetDestination(player.transform.position);
+       agent.SetDestination(target);
 
        // Check if the zombie is within attack range
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);

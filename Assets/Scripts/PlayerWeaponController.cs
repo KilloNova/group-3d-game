@@ -57,7 +57,12 @@ public class PlayerWeaponController : MonoBehaviour
     [SerializeField]
     private Camera killstreakCamera;
 
-    bool invincible = true;
+    public int killAmount;
+
+    public int maxKillAmount;
+    public bool invincible = false;
+
+    public bool canKillstreak = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -83,10 +88,13 @@ public class PlayerWeaponController : MonoBehaviour
         transform.root.GetComponent<Movement>().enabled = true;
         killstreak = false;
         killstreakCamera.gameObject.SetActive(false);
+        killAmount = 0;
+        maxKillAmount += 5;
     }
 
     public void ActivateKillstreak()
     {
+        canKillstreak = false;
         killstreakCamera.gameObject.SetActive(true);
         transform.root.GetComponent<Movement>().enabled = false;
         killstreak = true;
@@ -102,6 +110,11 @@ public class PlayerWeaponController : MonoBehaviour
     private void PlayerKilledZombie(ZombieController zombie, int bounty)
     {
         money += bounty;
+        killAmount ++;
+        if(killAmount >= maxKillAmount)
+        {
+            canKillstreak = true;
+        }
     }
     // Update is called once per frame
     void Update()
@@ -135,7 +148,7 @@ public class PlayerWeaponController : MonoBehaviour
         //     currentWeapons.RemoveAll(weapon => !weapons.Any(w => w.GetComponent<FirearmController>()._weaponName == weapon));
         // }
 
-        if(Input.GetKeyDown(KeyCode.K))
+        if(Input.GetKeyDown(KeyCode.K) && canKillstreak)
         {
             ActivateKillstreak();
         }

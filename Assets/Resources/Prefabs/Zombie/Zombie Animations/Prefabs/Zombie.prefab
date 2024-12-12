@@ -458,9 +458,11 @@ GameObject:
   - component: {fileID: 4972802055694576266}
   - component: {fileID: -1679508950283960113}
   - component: {fileID: 1208433139235804130}
-  - component: {fileID: -5253845701778107247}
   - component: {fileID: -2861166819978271652}
   - component: {fileID: -6310614235259718696}
+  - component: {fileID: 5176984286941873586}
+  - component: {fileID: 2540099325534120319}
+  - component: {fileID: 7874752590514813772}
   m_Layer: 7
   m_Name: Zombie
   m_TagString: Untagged
@@ -520,10 +522,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 20
   currentHealth: 0
-  agent: {fileID: -5253845701778107247}
+  agent: {fileID: 0}
   player: {fileID: 0}
+  dummyTarget: {fileID: 0}
+  attackRange: 1
+  attackInterval: 1
+  damagePerAttack: 1
   bounty: 100
   immunityCounter: 0
+  target: {x: 0, y: 0, z: 0}
+  playerWeaponController: {fileID: 0}
+  killstreakController: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!65 &1208433139235804130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -545,28 +555,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5, y: 4, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!195 &-5253845701778107247
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776966266084158026}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!54 &-2861166819978271652
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -690,6 +678,75 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5176984286941873586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776966266084158026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfd9ab664c5649ff90d1f0533a2ff79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  agent: {fileID: 7874752590514813772}
+  player: {fileID: 0}
+  dummyTarget: {fileID: 0}
+  attackRange: 2.5
+  attackInterval: 1
+  damagePerAttack: 1
+  bounty: 0
+  immunityCounter: 0
+  target: {x: 0, y: 0, z: 0}
+  playerWeaponController: {fileID: 0}
+  killstreakController: {fileID: 0}
+  gameManager: {fileID: 0}
+--- !u!65 &2540099325534120319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776966266084158026}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 4, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &7874752590514813772
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1776966266084158026}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1786999476906242876
 GameObject:
   m_ObjectHideFlags: 0

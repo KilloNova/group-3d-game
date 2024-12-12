@@ -7,6 +7,9 @@ public class Movement : MonoBehaviour
     private CharacterController characterController;
 
     [SerializeField]
+    private PlayerWeaponController playerWeaponController;
+
+    [SerializeField]
     private float speed = 5.0f;
 
     [SerializeField]
@@ -38,7 +41,7 @@ public class Movement : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
-
+        playerWeaponController = transform.GetComponentInChildren<PlayerWeaponController>();
         playerCamera = Camera.main.transform; // Use Camera.main to get the main camera
 
         currentHealth = playerHealth;
@@ -105,6 +108,8 @@ public class Movement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if(playerWeaponController.invincible)
+        return;
         currentHealth -= damage;
         if (currentHealth <= 0)
         {
