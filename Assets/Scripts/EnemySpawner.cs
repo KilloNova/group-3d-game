@@ -26,11 +26,11 @@ public class EnemySpawner : MonoBehaviour
 
             // Generate a random position within a circle around the spawner
             Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
-            Vector3 spawnPosition = new Vector3(transform.position.x + randomCircle.x, 100f, transform.position.z + randomCircle.y);
+            Vector3 spawnPosition = new Vector3(transform.position.x + randomCircle.x, 5f, transform.position.z + randomCircle.y);
 
-            // Use a raycast to determine the ground level (y)
+            // Use a raycast to determine the ground level (y), but limit to 5 units height
             RaycastHit hit;
-            if (Physics.Raycast(spawnPosition, Vector3.down, out hit, Mathf.Infinity))
+            if (Physics.Raycast(spawnPosition, Vector3.down, out hit, 5f))
             {
                 spawnPosition.y = hit.point.y; // Set y to the ground level
             }

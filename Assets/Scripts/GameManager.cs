@@ -5,15 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public PlayerWeaponController weaponController;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public KillstreakController killstreakController;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GameObject player;
+    // Start is called before the first frame update
+
 }

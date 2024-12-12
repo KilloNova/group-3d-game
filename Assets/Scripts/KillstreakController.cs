@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KillstreakController : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class KillstreakController : MonoBehaviour
     public delegate void KillstreakEndHandler();
     public event KillstreakEndHandler KillstreakEnd;
 
-
+    public Image progress;
 
     void OnEnable()
     {
@@ -63,26 +64,38 @@ public class KillstreakController : MonoBehaviour
         GetComponent<AudioSource>().Play();
     }
 
+    private IEnumerator LowerProgress()
+    {
+        float timeElapsed = 0f;
+        while (timeElapsed < time)
+        {
+            progress.fillAmount = Mathf.Lerp(1, 0, timeElapsed / time);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
 
 
     private void LoadState()
     {
-        mainCamera.gameObject.SetActive(false);
+        mainCamera.enabled = false;
         killstreakCamera.gameObject.SetActive(true);
         killstreakLight.enabled = true;
         loaded = false;
         gun.enabled = false;
         animator.Play("Waiting");
         animator.SetTrigger("killstreak");
+
     }
 
     private IEnumerator ExitState(float time)
     {
+        StartCoroutine(LowerProgress());
         yield return new WaitForSeconds(time);
         killstreakLight.enabled = false;
         loaded = false;
         gun.enabled = false;
-        mainCamera.gameObject.SetActive(true);
+        mainCamera.enabled = true;
         KillstreakEnd?.Invoke();
     }
 

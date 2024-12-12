@@ -45,6 +45,11 @@ public class ZombieController : MonoBehaviour
     public KillstreakController killstreakController;
 
     public GameManager gameManager;
+
+    [SerializeField]
+    private Animator animator;
+
+    private bool canAttack = true;
     // Start is called before the first frame update
     /*
     void Start()
@@ -59,6 +64,7 @@ public class ZombieController : MonoBehaviour
         currentHealth = maxHealth;
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         playerWeaponController = gameManager.weaponController;
+        killstreakController = gameManager.killstreakController;
         dummyTarget = GameObject.FindGameObjectWithTag("DummyTarget").transform;
         // Ensure the player reference is correctly set
         player = GameObject.FindGameObjectWithTag("Player");
@@ -69,6 +75,7 @@ public class ZombieController : MonoBehaviour
         else
         {
             player.transform.GetComponentInChildren<PlayerWeaponController>()?.DontForgetToLikeAndSubscribe(this);
+            playerWeaponController = player.transform.GetComponentInChildren<PlayerWeaponController>();
         }
 
         // Ensure the NavMeshAgent is correctly set
@@ -97,6 +104,10 @@ public class ZombieController : MonoBehaviour
 
     void OnEnable()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        playerWeaponController = gameManager.weaponController;
+        killstreakController = gameManager.killstreakController;
+        player = gameManager.player;
         playerWeaponController.OnActivateKillstreak += StartKillstreak;
         killstreakController.KillstreakEnd += EndKillstreak;
     }
@@ -110,7 +121,7 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        animator = GetComponent<Animator>();
         if(playerWeaponController == null)
         {
             playerWeaponController = FindFirstObjectByType<PlayerWeaponController>();
@@ -137,6 +148,7 @@ public class ZombieController : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
        if (distanceToPlayer <= attackRange && !isAttacking)
         {
+
             StartCoroutine(AttackPlayer());
         }
 
@@ -151,13 +163,27 @@ public class ZombieController : MonoBehaviour
     private void TakeDamage(float damage)
     {
         currentHealth -= damage;
+
         Debug.Log($"{gameObject.name} took {damage} damage. Remaining health: {currentHealth}");
 
         if (currentHealth <= 0)
         {
             Die();
+        }else
+        {
+        animator.SetTrigger("damage");
         }
+        StartCoroutine(StopAndStartAgent());
     }
+    private IEnumerator StopAndStartAgent()
+    {
+        canAttack = false;
+        agent.isStopped = true;
+        yield return new WaitForSeconds(0.5f); // adjust the delay as needed
+        agent.isStopped = false;
+        canAttack = true;
+    }
+    
 
     private void OnTriggerEnter(Collider other)
     {
@@ -177,17 +203,26 @@ public class ZombieController : MonoBehaviour
     {
         if(dead)
         return;
-
+        agent.enabled = false;
+        animator.SetTrigger("die");
         dead = true;
         OnZombieDeath?.Invoke(this, bounty);
         Debug.Log($"{gameObject.name} has died!");
-        Destroy(gameObject); // Remove the zombie from the scene
+        Destroy(gameObject, 1.25f); // Remove the zombie from the scene
     }
 
     private IEnumerator AttackPlayer()
     {
+        if(!canAttack)
+        {
+            yield break;
+        }
         isAttacking = true;
+        animator = GetComponent<Animator>();
 
+        animator.SetTrigger("attack");
+
+        StartCoroutine(StopAndStartAgent());
         // Damage the player
         Movement playerMovement = player.GetComponent<Movement>();
         if (playerMovement != null)

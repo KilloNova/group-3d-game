@@ -497,7 +497,7 @@ Animator:
   m_GameObject: {fileID: 1776966266084158026}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 0112b3ddf6b69f148b600356eb9c21a3, type: 3}
-  m_Controller: {fileID: 9100000, guid: 837f79bcbf98ea946b3c32443e6b3c48, type: 2}
+  m_Controller: {fileID: 9100000, guid: 04bfba3681200ff4fa26bb00be558923, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -520,12 +520,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bfd9ab664c5649ff90d1f0533a2ff79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 30
   currentHealth: 0
   agent: {fileID: 0}
   player: {fileID: 0}
   dummyTarget: {fileID: 0}
-  attackRange: 1
+  attackRange: 1.5
   attackInterval: 1
   damagePerAttack: 1
   bounty: 100
@@ -534,6 +534,7 @@ MonoBehaviour:
   playerWeaponController: {fileID: 0}
   killstreakController: {fileID: 0}
   gameManager: {fileID: 0}
+  animator: {fileID: 4972802055694576266}
 --- !u!65 &1208433139235804130
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -704,6 +705,7 @@ MonoBehaviour:
   playerWeaponController: {fileID: 0}
   killstreakController: {fileID: 0}
   gameManager: {fileID: 0}
+  animator: {fileID: 0}
 --- !u!65 &2540099325534120319
 BoxCollider:
   m_ObjectHideFlags: 0

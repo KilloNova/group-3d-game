@@ -340,7 +340,7 @@ MonoBehaviour:
   jumpHeight: 2
   gravity: -9.81
   mouseSensitivity: 100
-  playerHealth: 10
+  playerHealth: 44
   sprintCd: 2
 --- !u!136 &196400393
 CapsuleCollider:
@@ -29498,75 +29498,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &832712121
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -1679508950283960113, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: dummyTarget
-      value: 
-      objectReference: {fileID: 475726754}
-    - target: {fileID: -1679508950283960113, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: killstreakController
-      value: 
-      objectReference: {fileID: 1123653669}
-    - target: {fileID: -1679508950283960113, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: playerWeaponController
-      value: 
-      objectReference: {fileID: 488386861}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -34.984314
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.16410017
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 11.43309
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1432951499188351216, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1776966266084158026, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-      propertyPath: m_Name
-      value: Zombie
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
 --- !u!1 &890444351
 GameObject:
   m_ObjectHideFlags: 0
@@ -30209,6 +30140,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponController: {fileID: 488386861}
+  killstreakController: {fileID: 1123653669}
+  player: {fileID: 196400389}
 --- !u!1 &1068324669 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6027135874771689032, guid: f56a3b1530e082b419df22992c264330, type: 3}
@@ -30347,6 +30280,7 @@ MonoBehaviour:
   killstreakLight: {fileID: 1032415435}
   playerWeaponController: {fileID: 488386861}
   mainCamera: {fileID: 963194227}
+  progress: {fileID: 309597832}
 --- !u!4 &1123653670
 Transform:
   m_ObjectHideFlags: 0
@@ -30928,7 +30862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zombiePrefab: {fileID: 1776966266084158026, guid: f99bbd0754201f448b27f0c455b92b76, type: 3}
-  zombieInterval: 0.25
+  zombieInterval: 0.5
   spawnRadius: 50
 --- !u!4 &1939326246
 Transform:
@@ -36172,7 +36106,6 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 196400390}
   - {fileID: 2090928725}
-  - {fileID: 832712121}
   - {fileID: 1469667628}
   - {fileID: 787053043}
   - {fileID: 709432993}

@@ -109,6 +109,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void PlayerKilledZombie(ZombieController zombie, int bounty)
     {
+        if(invincible)
+        return;
         money += bounty;
         killAmount ++;
         if(killAmount >= maxKillAmount)

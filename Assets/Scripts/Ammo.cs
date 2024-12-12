@@ -25,8 +25,9 @@ public class Ammo : MonoBehaviour
         {
             ammoText.text = $"{playerWeaponController.currentAmmoCount}/{playerWeaponController.totalBulletCount}";
         }
+        if(!playerWeaponController.invincible)
         progressBar.fillAmount = (float)playerWeaponController.killAmount / playerWeaponController.maxKillAmount;
-        if(progressBar.fillAmount >= .99f)
+        if(progressBar.fillAmount >= .99f || playerWeaponController.invincible)
         {
             killText.enabled = true;
             StartFlashing();
