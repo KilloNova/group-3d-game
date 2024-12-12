@@ -18,6 +18,12 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private float mouseSensitivity = 100.0f;
 
+    [SerializeField]
+    private int playerHealth = 10;
+
+    private int currentHealth;
+    private bool isGameOver = false;
+
     public float sprintCd = 0f;
     private float sprintTimer = 2f;
 
@@ -34,6 +40,8 @@ public class Movement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
 
         playerCamera = Camera.main.transform; // Use Camera.main to get the main camera
+
+        currentHealth = playerHealth;
     }
 
     void Update()
@@ -93,5 +101,42 @@ public class Movement : MonoBehaviour
 
         playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f); // Rotate the camera vertically
         transform.Rotate(Vector3.up * mouseX); // Rotate the player horizontally
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player has died!");
+        isGameOver = true;
+
+        
+        GameOver();
+    }
+
+    private void GameOver()
+    {
+        // Stop all player movement and input
+        velocity = Vector3.zero;
+
+        // Lock the cursor
+        Cursor.lockState = CursorLockMode.None;
+
+        // Optionally pause the game
+        Time.timeScale = 0;
+
+        // Display a game-over UI (add your own logic or link to a UIManager)
+        Debug.Log("Game Over! Display game-over screen here.");
+
+        // Example: Restart the game (optional, replace with your desired behavior)
+        // Uncomment if you want to allow restarting immediately for testing
+        // UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
     }
 }

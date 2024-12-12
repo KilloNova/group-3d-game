@@ -15,6 +15,15 @@ public class ZombieController : MonoBehaviour
     public NavMeshAgent agent; // Navigation component
     public GameObject player; // Reference to the player object
 
+    [SerializeField]
+    private float attackRange = 2.5f; // Distance within which the zombie attacks
+
+    [SerializeField]
+    private float attackInterval = 1.0f; // Time between attacks
+
+    [SerializeField]
+    private int damagePerAttack = 1; // Damage dealt per attack
+
     public int bounty;
 
     public event Action<ZombieController, int> OnZombieDeath;
@@ -23,6 +32,8 @@ public class ZombieController : MonoBehaviour
 
     [SerializeField]
     private int immunityCounter = 0;
+
+    private bool isAttacking = false;
 
     // Start is called before the first frame update
     /*
@@ -64,6 +75,13 @@ public class ZombieController : MonoBehaviour
         immunityCounter--;
         //Set the zombie's destination to the player's position
        agent.SetDestination(player.transform.position);
+
+       // Check if the zombie is within attack range
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+       if (distanceToPlayer <= attackRange && !isAttacking)
+        {
+            StartCoroutine(AttackPlayer());
+        }
 
     }
 
@@ -107,5 +125,23 @@ public class ZombieController : MonoBehaviour
         OnZombieDeath?.Invoke(this, bounty);
         Debug.Log($"{gameObject.name} has died!");
         Destroy(gameObject); // Remove the zombie from the scene
+    }
+
+    private IEnumerator AttackPlayer()
+    {
+        isAttacking = true;
+
+        // Damage the player
+        Movement playerMovement = player.GetComponent<Movement>();
+        if (playerMovement != null)
+        {
+            playerMovement.TakeDamage(damagePerAttack);
+            Debug.Log($"{gameObject.name} attacked the player for {damagePerAttack} damage.");
+        }
+
+        // Wait for the attack interval
+        yield return new WaitForSeconds(attackInterval);
+
+        isAttacking = false;
     }
 }
