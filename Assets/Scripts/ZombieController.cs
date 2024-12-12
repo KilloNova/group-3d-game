@@ -84,7 +84,7 @@ public class ZombieController : MonoBehaviour
         {
             Debug.LogError($"{gameObject.name} is missing a NavMeshAgent component!");
         }
-
+        
         
     }
 
@@ -121,6 +121,10 @@ public class ZombieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!agent.isOnNavMesh)
+        {
+            Destroy(this);
+        }
         animator = GetComponent<Animator>();
         if(playerWeaponController == null)
         {
@@ -142,6 +146,7 @@ public class ZombieController : MonoBehaviour
         if(immunityCounter > 0)
         immunityCounter--;
         //Set the zombie's destination to the player's position
+        if(agent.isOnNavMesh)
        agent.SetDestination(target);
 
        // Check if the zombie is within attack range
@@ -173,6 +178,7 @@ public class ZombieController : MonoBehaviour
         {
         animator.SetTrigger("damage");
         }
+        if(agent.isOnNavMesh)
         StartCoroutine(StopAndStartAgent());
     }
     private IEnumerator StopAndStartAgent()
