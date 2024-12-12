@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7198404789085945452}
   - component: {fileID: 8664764842838392201}
   - component: {fileID: 4214262624603102202}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7768616601738147051}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BulletSpawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 2565466450490596528}
   - component: {fileID: 372469656582193785}
   - component: {fileID: 1381350976760761516}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Hammer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 3667875482232483004}
   - component: {fileID: 1363136530882514996}
   - component: {fileID: 6500250033189625857}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Slide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 8845996538654539317}
   - component: {fileID: 8291429329048993918}
   - component: {fileID: 5368102448088868449}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -481,7 +481,7 @@ GameObject:
   - component: {fileID: 8739313607309420357}
   - component: {fileID: 5754525453540024788}
   - component: {fileID: 9149692911832612332}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Magazin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 3183199385913372245}
   - component: {fileID: 4613692072502241812}
   - component: {fileID: 1664322275598017018}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2344122737053602644}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -677,7 +677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6860058518882177988}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: M1911
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6805935421054136653}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: CINEMA_4D_Editor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
