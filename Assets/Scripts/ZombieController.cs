@@ -197,7 +197,7 @@ public class ZombieController : MonoBehaviour
         {
             if(immunityCounter == 0)
             {
-            Debug.LogError("splash");
+            //Debug.LogError("splash");
             immunityCounter = 10;
             TakeDamage(40f);
             }

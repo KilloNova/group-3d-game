@@ -82,7 +82,7 @@ public class PlayerWeaponController : MonoBehaviour
 
     private void EndKillstreak()
     {
-        Debug.LogError("ended killstreak");
+        //Debug.LogError("ended killstreak");
         weapons[selectedWeapon].GetComponent<FirearmController>().inHand = true;
         invincible = false;
         transform.root.GetComponent<Movement>().enabled = true;
