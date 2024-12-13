@@ -7,7 +7,7 @@ public class Ammo : MonoBehaviour
     public PlayerWeaponController playerWeaponController; // Reference to the weapon controller
     public TextMeshProUGUI ammoText; // Reference to the TextMeshPro component
     public TextMeshProUGUI killText;
-
+    public TextMeshProUGUI scoreText;
     public TextMeshProUGUI inventoryText;
     public Image progressBar;
     void Start()
@@ -34,6 +34,7 @@ public class Ammo : MonoBehaviour
             //inventoryText.text = string.Join(" ", playerWeaponController.currentWeapons);
 
         }
+        scoreText.text = "Score: " + playerWeaponController.money;
         if(!playerWeaponController.invincible)
         progressBar.fillAmount = (float)playerWeaponController.killAmount / playerWeaponController.maxKillAmount;
         if(progressBar.fillAmount >= .99f || playerWeaponController.invincible)
