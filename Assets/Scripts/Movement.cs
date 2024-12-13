@@ -123,7 +123,6 @@ public class Movement : MonoBehaviour
             Die();
         }
 
-
             float healthPercentage = Mathf.Clamp01((float)currentHealth / maxHealth);
             float alpha = 1f - healthPercentage;
             Color color = ImageComponent.color;
