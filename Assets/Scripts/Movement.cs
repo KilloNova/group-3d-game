@@ -42,6 +42,8 @@ public class Movement : MonoBehaviour
 
     public Image ImageComponent;
 
+    private Coroutine regenCoroutine;
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -58,6 +60,22 @@ public class Movement : MonoBehaviour
     {
         HandleMovement();
         HandleMouseLook();
+        if (regenCoroutine == null)
+        {
+            regenCoroutine = StartCoroutine(RegenerateHP());
+        }
+
+    }
+
+    private IEnumerator RegenerateHP() {
+        while (currentHealth < maxHealth)
+        {
+            currentHealth += 1; // Increase HP by 1
+            Debug.Log("Current HP: " + maxHealth);
+            yield return new WaitForSeconds(1);
+        }
+        updateHealthHud();
+
     }
 
     void HandleMovement()
@@ -123,13 +141,16 @@ public class Movement : MonoBehaviour
             Die();
         }
 
+        updateHealthHud();
+        
+    }
 
+    void updateHealthHud(){
             float healthPercentage = Mathf.Clamp01((float)currentHealth / maxHealth);
             float alpha = 1f - healthPercentage;
             Color color = ImageComponent.color;
             color.a = alpha;
             ImageComponent.color = color;
-        
     }
 
     private void Die()
