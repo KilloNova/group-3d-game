@@ -84,7 +84,7 @@ MonoBehaviour:
   explosionPrefab: {fileID: 100002, guid: 3b1513bcb86426b4795879be6a128ed7, type: 3}
   gunFlashPrefab: {fileID: 2177034726962913318, guid: 3285547b56035fc4b8118c289e38a363, type: 3}
   bulletSpawnPoint: {fileID: 7217784939956457074}
-  bulletSpeed: 1.5
+  bulletSpeed: 3.5
   bulletLifeTime: 5
   fireCycleDelayCounterMax: 2
   fireReloadDelayCounterMax: 175

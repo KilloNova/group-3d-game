@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerWeaponController : MonoBehaviour
 {
@@ -63,6 +64,9 @@ public class PlayerWeaponController : MonoBehaviour
     public bool invincible = false;
 
     public bool canKillstreak = false;
+
+
+    public Image healthImage;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +94,7 @@ public class PlayerWeaponController : MonoBehaviour
         killstreakCamera.gameObject.SetActive(false);
         killAmount = 0;
         maxKillAmount += 5;
+        healthImage.enabled = true;
     }
 
     public void ActivateKillstreak()
@@ -104,6 +109,7 @@ public class PlayerWeaponController : MonoBehaviour
         {
             item.GetComponent<FirearmController>().inHand = false;
         }
+        healthImage.enabled = false;
 
     }
 
@@ -136,7 +142,6 @@ public class PlayerWeaponController : MonoBehaviour
         currentAmmoCount = currentWeapon._magazineCount;
         totalBulletCount = currentWeapon._totalBulletCount;
         currentWeaponName = currentWeapon._weaponName;
-        
         foreach (var item in weapons)
         {
             if(!currentWeapons.Contains(item.GetComponent<FirearmController>()._weaponName))

@@ -26,7 +26,12 @@ public class Ammo : MonoBehaviour
         if (playerWeaponController != null && ammoText != null)
         {
             ammoText.text = $"{playerWeaponController.currentAmmoCount}/{playerWeaponController.totalBulletCount}";
-            inventoryText.text = string.Join(" ", playerWeaponController.currentWeapons);
+            inventoryText.text = "";
+            for (int i = 0; i < playerWeaponController.currentWeapons.Count; i++)
+            {
+                inventoryText.text += i+1 + ": " + playerWeaponController.currentWeapons[i] + " ";
+            }
+            //inventoryText.text = string.Join(" ", playerWeaponController.currentWeapons);
 
         }
         if(!playerWeaponController.invincible)
