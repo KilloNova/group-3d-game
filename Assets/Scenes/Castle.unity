@@ -335,12 +335,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964e7c84da3883743ac0c7e7b1dfe652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWeaponController: {fileID: 0}
+  playerWeaponController: {fileID: 488386861}
   speed: 5
   jumpHeight: 2
   gravity: -9.81
   mouseSensitivity: 100
   playerHealth: 44
+  maxHealth: 0
   sprintCd: 2
   ImageComponent: {fileID: 814296772}
 --- !u!136 &196400393
@@ -641,6 +642,7 @@ MonoBehaviour:
   maxKillAmount: 10
   invincible: 0
   canKillstreak: 0
+  healthImage: {fileID: 814296772}
 --- !u!1 &539076050
 GameObject:
   m_ObjectHideFlags: 0

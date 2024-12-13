@@ -25,8 +25,9 @@ public class Movement : MonoBehaviour
     [SerializeField]
     private int playerHealth = 10;
 
-    private int currentHealth;
+    private float currentHealth;
 
+    [SerializeField]
     private int maxHealth;
     private bool isGameOver = false;
 
@@ -52,7 +53,7 @@ public class Movement : MonoBehaviour
         playerCamera = Camera.main.transform; // Use Camera.main to get the main camera
 
         currentHealth = playerHealth;
-        maxHealth = currentHealth;
+        maxHealth = (int)currentHealth;
 
     }
 
@@ -60,10 +61,15 @@ public class Movement : MonoBehaviour
     {
         HandleMovement();
         HandleMouseLook();
-        if (regenCoroutine == null)
+        // if (regenCoroutine == null)
+        // {
+        //     regenCoroutine = StartCoroutine(RegenerateHP());
+        // }
+        if(currentHealth < maxHealth)
         {
-            regenCoroutine = StartCoroutine(RegenerateHP());
+            currentHealth += .01f;
         }
+        updateHealthHud();
 
     }
 
@@ -141,15 +147,12 @@ public class Movement : MonoBehaviour
             Die();
         }
 
-<<<<<<< HEAD
-        updateHealthHud();
         
     }
 
     void updateHealthHud(){
-=======
->>>>>>> 0a10480f1cb902720551883b6ed0b46e087645e6
             float healthPercentage = Mathf.Clamp01((float)currentHealth / maxHealth);
+            Debug.LogError(healthPercentage);
             float alpha = 1f - healthPercentage;
             Color color = ImageComponent.color;
             color.a = alpha;
