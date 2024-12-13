@@ -141,14 +141,12 @@ public class Movement : MonoBehaviour
             Die();
         }
 
-<<<<<<< HEAD
         updateHealthHud();
         
     }
 
     void updateHealthHud(){
-=======
->>>>>>> 0a10480f1cb902720551883b6ed0b46e087645e6
+
             float healthPercentage = Mathf.Clamp01((float)currentHealth / maxHealth);
             float alpha = 1f - healthPercentage;
             Color color = ImageComponent.color;
